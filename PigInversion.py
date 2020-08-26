@@ -637,7 +637,8 @@ def main():
     uObs, speed, sigmaX, sigmaY = \
         mf.getModelVelocity(inversionParams['velocity'], Q, V,
                             minSigma=5, maxSigma=100)
-    A = mf.getRateFactor(inversionParams['rheology'], Q)
+    T = firedrake.Constant(268.)
+    A = firedrake.interpolate(icepack.rate_factor(T), Q)
     Print(f'run time {datetime.now()-startTime}')
     #
     # Initialize beta and theta
